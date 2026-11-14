@@ -1,0 +1,13 @@
+{
+    "cSpell.words": [
+        "const",
+        "dirname",
+        "from",
+        "http",
+        "import",
+        "join",
+        "path",
+        "promises"
+    ],
+    "thunder-client.saveToWorkspace": false
+}
