@@ -87,4 +87,12 @@ export class ProductController {
 
         return res.status(404).send({ message: "product not found!" });
     }
+
+    renderProductsList(req: Request, res: Response) {
+        res.render("products", {
+            pageTitle: "Product list",
+            description: "this is description",
+            products: this.productService.findAll()
+        })
+    }
 };

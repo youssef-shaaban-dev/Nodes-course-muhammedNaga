@@ -14,12 +14,12 @@ app.set("views", path.join(import.meta.dirname, "views"));
 // static files
 app.use(express.static(path.join(import.meta.dirname, "public")))
 
-app.get("/", (req, res) => {
-    res.render("index");
-})
+// Products Routes
+app.get("/products", (req, res) => productController.renderProductsList(req, res));
 
 
-app.get("/", (req, res) => {
+
+app.get("/api", (req, res) => {
     res.send("<h1>hello from express</h1>")
 });
 
@@ -29,21 +29,31 @@ const productService = new ProductService(fakeProductsData)
 
 const productController = new ProductController(productService);
 
+// Apis
+app.get("/api/products", (req, res) => productController.getProducts(req, res));
 
-app.get("/products", (req, res) => productController.getProducts(req, res));
-
-app.get("/products/:id", (req, res) => productController.getProductById(req, res));
+app.get("/api/products/:id", (req, res) => productController.getProductById(req, res));
 
 // Create A New Product
-app.post("/products", (req, res) => productController.createProduct(req, res));
+app.post("/api/products", (req, res) => productController.createProduct(req, res));
 
 // Update
 
-app.patch("/products/:id", (req, res) => productController.updateProductByIndex(req, res));
+app.patch("/api/products/:id", (req, res) => productController.updateProductByIndex(req, res));
 
 // Delete
 
-app.delete("/products/:id", (req, res) => productController.deleteProduct(req, res));
+app.delete("/api/products/:id", (req, res) => productController.deleteProduct(req, res));
+
+
+app.get("/", (req, res) => {
+    res.render("index");
+})
+
+// handle 404 page ui
+app.use((req, res) => {
+    res.render("notFound");
+})
 
 const PORT: number = 5000;
 app.listen(PORT, () => {
