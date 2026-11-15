@@ -2,12 +2,17 @@ import express from "express";
 import { generateFakeProducts } from "./utils/fakeData.js";
 import { ProductController } from "./controllers/ProductController.js";
 import { ProductService } from "./services/ProductService.js";
+import path from "node:path";
 
 const app = express();
 
 app.use(express.json());
-
+// set Views director
 app.set("view engine", "pug");
+app.set("views", path.join(import.meta.dirname, "views"));
+
+// static files
+app.use(express.static(path.join(import.meta.dirname, "public")))
 
 app.get("/", (req, res) => {
     res.render("index");
