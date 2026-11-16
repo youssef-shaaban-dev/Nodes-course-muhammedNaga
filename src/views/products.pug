@@ -8,4 +8,12 @@ html(lang="en")
 
         h1= pageTitle
         p= description
-        products= JSON.stringify(products)
+        //- product list
+        div
+            each product in products 
+                li
+                    .item-container
+                        h2.item-heading= product.title 
+                        p.item-description= product.description 
+                        p.item-price= product.price
+                        button.item-cart-btn Add To Cart
