@@ -16,6 +16,7 @@ app.use(express.static(path.join(import.meta.dirname, "public")))
 
 // Products Routes
 app.get("/products", (req, res) => productController.renderProductsList(req, res));
+app.get("/products/:id", (req, res) => productController.renderProductPage(req, res));
 
 
 
