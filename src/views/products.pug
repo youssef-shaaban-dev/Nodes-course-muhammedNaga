@@ -3,15 +3,17 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet" , href="/styles/products.css")
         title products page
     body 
 
         h1= pageTitle
         p= description
         //- product list
-        div
+    .main-container
+        .products-grid
             each product in products 
-                li
+                .product-card
                     .item-container
                         h2.item-heading= product.title 
                         p.item-description= product.description 
