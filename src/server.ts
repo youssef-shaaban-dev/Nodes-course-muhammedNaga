@@ -20,8 +20,6 @@ const fakeProductsData = generateFakeProducts();
 
 const productService = new ProductService(fakeProductsData);
 
-const productController = new ProductController(productService);
-
 // Products Routes
 const productsViewController = new ProductsViewController(productService)
 
