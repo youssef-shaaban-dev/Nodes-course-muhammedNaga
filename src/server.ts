@@ -3,6 +3,7 @@ import { generateFakeProducts } from "./utils/fakeData.js";
 import { ProductController } from "./controllers/ProductController.js";
 import { ProductService } from "./services/ProductService.js";
 import path from "node:path";
+import productsRouter from "./routes/products.js";
 
 const app = express();
 
@@ -26,26 +27,13 @@ app.get("/api", (req, res) => {
 
 const fakeProductsData = generateFakeProducts();
 
-const productService = new ProductService(fakeProductsData)
+const productService = new ProductService(fakeProductsData);
 
 const productController = new ProductController(productService);
 
 // Apis
-app.get("/api/products", (req, res) => productController.getProducts(req, res));
 
-app.get("/api/products/:id", (req, res) => productController.getProductById(req, res));
-
-// Create A New Product
-app.post("/api/products", (req, res) => productController.createProduct(req, res));
-
-// Update
-
-app.patch("/api/products/:id", (req, res) => productController.updateProductByIndex(req, res));
-
-// Delete
-
-app.delete("/api/products/:id", (req, res) => productController.deleteProduct(req, res));
-
+app.use("/api/products", productsRouter)
 
 app.get("/", (req, res) => {
     res.render("index");
