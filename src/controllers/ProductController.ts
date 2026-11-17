@@ -6,6 +6,10 @@ export class ProductController {
 
     constructor(private productService: ProductService) {
         this.getProducts = this.getProducts.bind(this);
+        this.getProductById = this.getProductById.bind(this);
+        this.createProduct = this.createProduct.bind(this);
+        this.updateProductByIndex = this.updateProductByIndex.bind(this);
+        this.deleteProduct = this.deleteProduct.bind(this);
     }
 
 
@@ -88,18 +92,5 @@ export class ProductController {
         return res.status(404).send({ message: "product not found!" });
     }
 
-    renderProductsList(req: Request, res: Response) {
-        res.render("products", {
-            pageTitle: "Product list",
-            description: "this is description",
-            products: this.productService.findAll()
-        })
-    }
-
-    renderProductPage(req: Request, res: Response) {
-        const productId = +req.params.id;
-        res.render("product", {
-            product: this.productService.getProductByID(productId)
-        })
-    }
+    
 };

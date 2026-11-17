@@ -4,6 +4,7 @@ import { ProductController } from "./controllers/ProductController.js";
 import { ProductService } from "./services/ProductService.js";
 import path from "node:path";
 import productsRouter from "./routes/products.js";
+import ProductsViewController from "./controllers/ProductsViewController.js";
 
 const app = express();
 
@@ -13,23 +14,25 @@ app.set("view engine", "pug");
 app.set("views", path.join(import.meta.dirname, "views"));
 
 // static files
-app.use(express.static(path.join(import.meta.dirname, "public")))
-
-// Products Routes
-app.get("/products", (req, res) => productController.renderProductsList(req, res));
-app.get("/products/:id", (req, res) => productController.renderProductPage(req, res));
-
-
-
-app.get("/api", (req, res) => {
-    res.send("<h1>hello from express</h1>")
-});
+app.use(express.static(path.join(import.meta.dirname, "public")));
 
 const fakeProductsData = generateFakeProducts();
 
 const productService = new ProductService(fakeProductsData);
 
 const productController = new ProductController(productService);
+
+// Products Routes
+const productsViewController = new ProductsViewController(productService)
+
+app.get("/products", productsViewController.renderProductsList);
+app.get("/products/:id", productsViewController.renderProductPage);
+
+
+app.get("/api", (req, res) => {
+    res.send("<h1>hello from express</h1>")
+});
+
 
 // Apis
 
