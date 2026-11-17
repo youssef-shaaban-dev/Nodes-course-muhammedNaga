@@ -5,7 +5,7 @@ import { ProductService } from "../services/ProductService.js";
 export class ProductController {
 
     constructor(private productService: ProductService) {
-
+        this.getProducts = this.getProducts.bind(this);
     }
 
 
