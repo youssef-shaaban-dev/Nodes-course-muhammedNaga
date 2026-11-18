@@ -4,6 +4,7 @@ import { ProductService } from "./services/ProductService.js";
 import path from "node:path";
 import productsRouter from "./routes/products.js";
 import ProductsViewController from "./controllers/ProductsViewController.js";
+import ErrorMiddleware from "./middlewares/Error.js";
 
 const app = express();
 
@@ -43,6 +44,9 @@ app.get("/", (req, res) => {
 app.use((req, res) => {
     res.render("notFound");
 })
+
+
+app.use(ErrorMiddleware.handle);
 
 const PORT: number = 5000;
 app.listen(PORT, () => {
