@@ -1,6 +1,5 @@
 import express from "express";
 import { generateFakeProducts } from "./utils/fakeData.js";
-import { ProductController } from "./controllers/ProductController.js";
 import { ProductService } from "./services/ProductService.js";
 import path from "node:path";
 import productsRouter from "./routes/products.js";
