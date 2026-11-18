@@ -6,6 +6,7 @@ import productsRouter from "./routes/products.js";
 import ProductsViewController from "./controllers/ProductsViewController.js";
 import ErrorMiddleware from "./middlewares/Error.js";
 import dotenv from "dotenv"
+import NotFoundMiddleware from "./middlewares/notFound.js";
 
 const app = express();
 
@@ -36,20 +37,16 @@ app.get("/api", (req, res) => {
 });
 
 
-// Apis
 
-app.use("/api/products", productsRouter)
+app.use("/api/products", productsRouter);
 
 app.get("/", (req, res) => {
     res.render("index");
 })
 
-// handle 404 page ui
-app.use((req, res) => {
-    res.render("notFound");
-})
 
-
+// Middlewares
+app.use(NotFoundMiddleware.handle);
 app.use(ErrorMiddleware.handle);
 
 const PORT: number = 5000;
