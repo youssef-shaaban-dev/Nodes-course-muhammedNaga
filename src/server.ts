@@ -5,10 +5,14 @@ import path from "node:path";
 import productsRouter from "./routes/products.js";
 import ProductsViewController from "./controllers/ProductsViewController.js";
 import ErrorMiddleware from "./middlewares/Error.js";
+import dotenv from "dotenv"
 
 const app = express();
 
 app.use(express.json());
+
+dotenv.config();
+
 // set Views director
 app.set("view engine", "pug");
 app.set("views", path.join(import.meta.dirname, "views"));
