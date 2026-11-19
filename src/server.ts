@@ -7,6 +7,7 @@ import ProductsViewController from "./controllers/ProductsViewController.js";
 import ErrorMiddleware from "./middlewares/Error.js";
 import dotenv from "dotenv"
 import helmet from "helmet"
+import morgan from "morgan"
 import NotFoundMiddleware from "./middlewares/notFound.js";
 const app = express();
 
@@ -20,6 +21,8 @@ app.use(helmet({
         action: "deny"
     }
 }));
+
+app.use(morgan("dev"));
 
 // set Views director
 app.set("view engine", "pug");
