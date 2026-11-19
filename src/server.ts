@@ -8,10 +8,17 @@ import ErrorMiddleware from "./middlewares/Error.js";
 import dotenv from "dotenv"
 import helmet from "helmet"
 import morgan from "morgan"
+import rateLimit from "express-rate-limit"
 import NotFoundMiddleware from "./middlewares/notFound.js";
 const app = express();
 
 dotenv.config();
+
+const rateLimiterOptions = {
+    windowMs: 15 *60 *1000, //15 minutes
+    limit: 100,
+    message: "Too many requests from this Ip , please try again later. "
+};
 
 app.use(express.json());
 
@@ -23,6 +30,8 @@ app.use(helmet({
 }));
 
 app.use(morgan("dev"));
+
+app.use(rateLimit(rateLimiterOptions))
 
 // set Views director
 app.set("view engine", "pug");
