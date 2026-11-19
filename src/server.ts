@@ -6,13 +6,20 @@ import productsRouter from "./routes/products.js";
 import ProductsViewController from "./controllers/ProductsViewController.js";
 import ErrorMiddleware from "./middlewares/Error.js";
 import dotenv from "dotenv"
+import helmet from "helmet"
 import NotFoundMiddleware from "./middlewares/notFound.js";
-
 const app = express();
+
+dotenv.config();
 
 app.use(express.json());
 
-dotenv.config();
+app.use(helmet({
+    contentSecurityPolicy: false,
+    xFrameOptions: {
+        action: "deny"
+    }
+}));
 
 // set Views director
 app.set("view engine", "pug");
