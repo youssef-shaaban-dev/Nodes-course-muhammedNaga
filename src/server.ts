@@ -5,17 +5,19 @@ import path from "node:path";
 import productsRouter from "./routes/products.js";
 import ProductsViewController from "./controllers/ProductsViewController.js";
 import ErrorMiddleware from "./middlewares/Error.js";
-import dotenv from "dotenv"
 import helmet from "helmet"
 import morgan from "morgan"
 import rateLimit from "express-rate-limit"
 import NotFoundMiddleware from "./middlewares/notFound.js";
-const app = express();
-
+import pool from "./models/db.js";
+import dotenv from "dotenv"
 dotenv.config();
 
+const app = express();
+
+
 const rateLimiterOptions = {
-    windowMs: 15 *60 *1000, //15 minutes
+    windowMs: 15 * 60 * 1000, //15 minutes
     limit: 100,
     message: "Too many requests from this Ip , please try again later. "
 };
@@ -62,6 +64,18 @@ app.use("/api/products", productsRouter);
 app.get("/", (req, res) => {
     res.render("index");
 })
+
+app.get("/db/products", async (req, res) => {
+    try {
+        const products = await pool.query("SELECT * FROM products;");
+        res.json({
+            products: products.rows,
+            length: products.rowCount
+        })
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 
 // Middlewares
